@@ -14,8 +14,13 @@
 $router->group([
     'prefix' => 'api/v1',
 ], function () use ($router) {
-    $router->get('/users', 'UsersController@index');
     $router->post('/users', 'UsersController@create');
     $router->post('/login', 'UsersController@authenticate');
+
+    //restricted route
+    $router->group(['middleware'=>'auth:api'],function () use ($router){
+        $router->get('/users', 'UsersController@index');
+        $router->get('/me','UsersController@me');
+    });
 });
 

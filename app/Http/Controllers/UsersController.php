@@ -89,5 +89,19 @@ class UsersController extends Controller
         ], 400);
     }
 
+    public function me()
+    {
+        $user = app('auth')->user();
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'message' => 'user profile found',
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => 'User not found',
+        ]);
+    }
 
 }
